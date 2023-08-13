@@ -1,4 +1,4 @@
-package com.mzhnf.pitjarustest.response
+package com.mzhnf.pitjarustest.model.response
 
 
 import com.google.gson.annotations.Expose
@@ -34,10 +34,10 @@ data class Store(
     val dcName: String,
     @Expose
     @SerializedName("latitude")
-    val latitude: String,
+    val latitude: Double,
     @Expose
     @SerializedName("longitude")
-    val longitude: String,
+    val longitude: Double,
     @Expose
     @SerializedName("region_id")
     val regionId: String,
@@ -58,5 +58,8 @@ data class Store(
     val subchannelId: String,
     @Expose
     @SerializedName("subchannel_name")
-    val subchannelName: String
+    val subchannelName: String,
+    @Expose
+    @SerializedName("distance")
+    val distance: String?
 )
