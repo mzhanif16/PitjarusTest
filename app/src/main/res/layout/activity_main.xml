@@ -282,118 +282,71 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_list_toko"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:srcCompat="@drawable/market" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/iv_list_toko"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:srcCompat="@drawable/target" />
-
         <TextView
             android:id="@+id/tv_target"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@drawable/target"
             android:text="Target Install \nCDFDPC"
             android:textAlignment="center"
             android:textSize="11sp"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:srcCompat="@drawable/dashboard" />
+            app:layout_constraintStart_toEndOf="@+id/tv_toko"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/tv_dashboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@drawable/dashboard"
             android:text="Dashboard"
             android:textAlignment="center"
             android:textSize="11sp"
             app:layout_constraintStart_toEndOf="@+id/tv_target"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:srcCompat="@drawable/transmission_history" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/tv_transmissionhistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:drawableTop="@drawable/transmission_history"
             android:text="Transmission\nHistory"
             android:textAlignment="center"
             android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_dashboard"
-            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_toko"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@drawable/market"
             android:text="Kunjungan"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_list_toko" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/logout" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@drawable/logout"
             android:text="Logout"
             android:textAlignment="center"
             android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_target" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

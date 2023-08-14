@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.ivListToko.setOnClickListener {
+        binding.tvToko.setOnClickListener {
             val intent = Intent(this,ListTokoActivity::class.java)
             startActivity(intent)
         }

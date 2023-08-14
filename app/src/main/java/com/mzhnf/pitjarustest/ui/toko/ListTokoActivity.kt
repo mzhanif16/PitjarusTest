@@ -1,10 +1,12 @@
 package com.mzhnf.pitjarustest.ui.toko
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -23,6 +25,7 @@ import com.mzhnf.pitjarustest.database.StoreEntity
 import com.mzhnf.pitjarustest.databinding.ActivityListTokoBinding
 import com.mzhnf.pitjarustest.model.dummy.TokoModel
 import com.mzhnf.pitjarustest.repository.StoreRepository
+import com.mzhnf.pitjarustest.ui.detailtoko.DetailTokoActivity
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -46,8 +49,6 @@ class ListTokoActivity : AppCompatActivity(), OnMapReadyCallback, ListTokoAdapte
         val currentDate = getCurrentDate()
 
         binding.tvDate.text = currentDate
-        val storeRepository = StoreRepository(this)
-        val storeList = runBlocking { storeRepository.getStoresFromDatabase() }
 
     }
 
@@ -82,6 +83,7 @@ class ListTokoActivity : AppCompatActivity(), OnMapReadyCallback, ListTokoAdapte
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 val currentLatLng = LatLng(location.latitude, location.longitude)
+                Log.d("currentt",currentLatLng.toString())
 
                 // Mendapatkan data toko dari database
                 val storeRepository = StoreRepository(this)
@@ -109,10 +111,14 @@ class ListTokoActivity : AppCompatActivity(), OnMapReadyCallback, ListTokoAdapte
                     store.distance = distanceText
                 }
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-//                googleMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
+                googleMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
             }
         }
 
+    }
+
+    fun onBackPressed(view: View){
+        onBackPressed()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -137,7 +143,19 @@ class ListTokoActivity : AppCompatActivity(), OnMapReadyCallback, ListTokoAdapte
         return R * c
     }
     override fun onClick(v: View, data: StoreEntity) {
-
+        val intent = Intent(this,DetailTokoActivity::class.java)
+        intent.putExtra("store_name",data.storeName)
+        intent.putExtra("store_code",data.storeCode)
+        intent.putExtra("area_name",data.areaName)
+        intent.putExtra("channel_name",data.channelName)
+        intent.putExtra("address",data.address)
+        intent.putExtra("region_name",data.regionName)
+        intent.putExtra("distance",data.distance)
+        intent.putExtra("longitude",data.longitude)
+        Log.d("longitude",data.longitude.toString())
+        Log.d("latitude",data.latitude.toString())
+        intent.putExtra("latitude",data.latitude)
+        startActivity(intent)
     }
 
 }

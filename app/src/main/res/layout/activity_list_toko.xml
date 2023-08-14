@@ -30,11 +30,12 @@
         map:srcCompat="@drawable/transmission_history" />
 
     <ImageView
-        android:id="@+id/imageView14"
+        android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:onClick="onBackPressed"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
         map:srcCompat="@drawable/baseline_arrow_back_24" />
@@ -46,7 +47,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="List Store"
-        map:layout_constraintStart_toEndOf="@+id/imageView14"
+        map:layout_constraintStart_toEndOf="@+id/iv_back"
         map:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -57,7 +58,7 @@
         android:layout_marginTop="4dp"
         android:text="Zaki Hanif"
         android:textSize="10sp"
-        map:layout_constraintStart_toEndOf="@+id/imageView14"
+        map:layout_constraintStart_toEndOf="@+id/iv_back"
         map:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <EditText
