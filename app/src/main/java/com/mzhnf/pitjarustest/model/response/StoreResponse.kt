@@ -4,7 +4,7 @@ package com.mzhnf.pitjarustest.model.response
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Store(
+data class StoreResponse(
     @Expose
     @SerializedName("account_id")
     val accountId: String,

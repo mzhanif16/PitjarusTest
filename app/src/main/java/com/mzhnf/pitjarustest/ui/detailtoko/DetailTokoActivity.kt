@@ -80,9 +80,15 @@ class DetailTokoActivity : AppCompatActivity() {
         }
 
         binding.ivCamera.setOnClickListener {
-            fetchCurrentLocation()
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                // Jika izin kamera sudah diberikan, buka kamera
+                fetchCurrentLocation()
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, CAMERA_REQUEST_CODE)
+            } else {
+                // Jika izin kamera belum diberikan, minta izin
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
+            }
         }
 
         binding.btnReset.setOnClickListener {
@@ -98,6 +104,7 @@ class DetailTokoActivity : AppCompatActivity() {
         binding.btnNovisit.setOnClickListener {
             val intent = Intent(this,ListTokoActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.ivDirection.setOnClickListener {

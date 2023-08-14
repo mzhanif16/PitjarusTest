@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class LoginResponse(
     @Expose
     @SerializedName("stores")
-    val stores: List<Store>,
+    val stores: List<StoreResponse>,
     @Expose
     @SerializedName("status")
     val status: String,

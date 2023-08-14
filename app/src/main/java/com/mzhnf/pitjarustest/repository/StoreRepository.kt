@@ -4,13 +4,13 @@ import android.content.Context
 import com.mzhnf.pitjarustest.database.StoreDao
 import com.mzhnf.pitjarustest.database.StoreDatabase
 import com.mzhnf.pitjarustest.database.StoreEntity
-import com.mzhnf.pitjarustest.model.response.Store
+import com.mzhnf.pitjarustest.model.response.StoreResponse
 
 class StoreRepository (private val context: Context){
     private val storeDao : StoreDao by lazy {
         StoreDatabase.getDatabase(context).storeDao()
     }
-    suspend fun saveStoreToDatabase(stores: List<Store>){
+    suspend fun saveStoreToDatabase(stores: List<StoreResponse>){
         val storeEntities = stores.map { store ->
             StoreEntity(
                 storeId = store.storeId,
