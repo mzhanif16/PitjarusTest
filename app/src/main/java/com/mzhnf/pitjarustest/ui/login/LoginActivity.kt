@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.mzhnf.pitjarustest.R
@@ -30,6 +31,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(view)
 
         initView()
+
+        binding.username.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                // Tangani aksi ketika tombol "Enter" ditekan
+                return@setOnKeyListener true // Menahan event key press agar tidak melanjutkan aksi bawaan
+            }
+            false // Lanjutkan event key press lainnya
+        }
 
         binding.btnLogin.setOnClickListener {
             var username = binding.username.text.toString()
