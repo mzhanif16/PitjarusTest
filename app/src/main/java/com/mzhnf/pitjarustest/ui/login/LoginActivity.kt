@@ -1,6 +1,5 @@
 package com.mzhnf.pitjarustest.ui.login
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
@@ -15,6 +14,8 @@ import com.mzhnf.pitjarustest.databinding.ActivityLoginBinding
 import com.mzhnf.pitjarustest.repository.StoreRepository
 import com.mzhnf.pitjarustest.ui.home.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     var progressDialog: Dialog? = null
     private val loginViewModel: LoginViewModel by viewModels()
+    private val compositeDisposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -89,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("CheckResult")
+
     private fun performLogin(username: String, password: String) {
         progressDialog?.show()
 
@@ -122,7 +124,13 @@ class LoginActivity : AppCompatActivity() {
                 progressDialog?.dismiss()
                 Toast.makeText(this@LoginActivity, "Error: ${error.message}", Toast.LENGTH_SHORT)
                     .show()
-            })
+            }).addTo(compositeDisposable)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Memastikan untuk membatalkan langganan saat aktivitas dihancurkan
+        compositeDisposable.clear()
     }
 
 

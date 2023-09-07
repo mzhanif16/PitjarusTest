@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Update
 import com.google.android.gms.location.LocationServices
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -58,27 +59,77 @@ class ListTokoActivity : AppCompatActivity(), OnMapReadyCallback, ListTokoAdapte
         return dateFormat.format(calendar.time)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
-    @SuppressLint("NotifyDataSetChanged")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
         // Memeriksa izin lokasi
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             googleMap.isMyLocationEnabled = true
+            updateMapAndShowStores()
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
         }
 
+//            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+//            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+//                if (location != null) {
+//                    val currentLatLng = LatLng(location.latitude, location.longitude)
+//                    Log.d("currentt",currentLatLng.toString())
+//
+//                    // Mendapatkan data toko dari database
+//                    val storeRepository = StoreRepository(this)
+//                    val storeList = runBlocking { storeRepository.getStoresFromDatabase() }
+//                    var adapter = ListTokoAdapter(storeList, currentLatLng,this)
+//                    var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
+//                    binding.rvListToko.layoutManager = layoutManager
+//                    binding.rvListToko.adapter = adapter
+//
+//                    // Menambahkan marker untuk setiap toko pada peta
+//                    for (store in storeList) {
+//                        val latitude = store.latitude ?: 0.0
+//                        val longitude = store.longitude ?: 0.0
+//                        val storeLatLng = LatLng(latitude,longitude)
+//
+//                        val distance = calculateDistance(currentLatLng, storeLatLng)
+//                        val distanceText = "%.2f km".format(distance) // Format jarak ke dua desimal
+//
+//                        val markerOptions = MarkerOptions()
+//                            .position(storeLatLng)
+//                            .title(store.storeName) // Anda dapat mengganti ini dengan informasi yang sesuai
+//                            .snippet("Jarak: $distanceText")
+//                        mMap.addMarker(markerOptions)
+//
+//                        store.distance = distanceText
+//                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(storeLatLng, 15f))
+//                    }
+//                    googleMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
+//                }
+//            }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    fun onBackPressed(view: View){
+        onBackPressed()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    mMap.isMyLocationEnabled = true
+                    updateMapAndShowStores()
+                }
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun updateMapAndShowStores() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
@@ -109,28 +160,13 @@ class ListTokoActivity : AppCompatActivity(), OnMapReadyCallback, ListTokoAdapte
                     mMap.addMarker(markerOptions)
 
                     store.distance = distanceText
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(storeLatLng, 15f))
                 }
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                googleMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
-            }
-        }
-
-    }
-
-    fun onBackPressed(view: View){
-        onBackPressed()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    mMap.isMyLocationEnabled = true
-                }
+                mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
             }
         }
     }
+
 
     private fun calculateDistance(currentLatLng: LatLng, storeLatLng: LatLng): Double {
         val R = 6371 // Radius of the earth in km
